@@ -21,14 +21,31 @@ public class EditarDocumentoExistente  {
         System.out.print("Digite o nome do proprietário: ");
         String nomeProprietario = scanner.nextLine();
 
+        System.out.print("Digite a Quadra: ");
+        String quadra = scanner.nextLine();
+
+        System.out.print("Digite o Lote: ");
+        String lote = scanner.nextLine();
+
+        List<Convidado> listaDeConvidados = List.of(
+                new Convidado("TEste","0123", "Placa")
+        ); // Verificar possibilidade de adicionar um laço até 25 aqui para pedir os nomes, digitando algo como "Fim" para indicar que acabaram os nomes.
+
         try (FileInputStream fis = new FileInputStream(arquivoEntrada);
              XWPFDocument documento = new XWPFDocument(fis)) {
 
-            substituirTexto(documento, "_______________________________", nomeProprietario);
+            substituirTexto(documento, "[PROPRIETARIO]", nomeProprietario);
+
+            substituirTexto(documento, "[QUADRA]", quadra);
+
+            substituirTexto(documento, "[LOTE]", lote);
+
+            XWPFTable tabela = documento.getTables().get(0);
+            preencherTabela(tabela, listaDeConvidados);
 
             try (FileOutputStream fos = new FileOutputStream(arquivoSaida)) {
                 documento.write(fos);
-                System.out.println("Documennto editado com sucesso e salvo como '" + arquivoSaida + ".docx'");
+                System.out.println("Documento editado com sucesso e salvo como '" + arquivoSaida + "'");
             }
 
 
@@ -59,6 +76,18 @@ public class EditarDocumentoExistente  {
             }
         }
 
+    }
+
+    public static void preencherTabela(XWPFTable tabela, List<Convidado> convidados){
+        for (int i = 0; i < convidados.size(); i++) {
+            if (i >=25) break;
+
+            XWPFTableRow linha = tabela.getRow(i + 1);
+
+            linha.getCell(2).setText(convidados.get(i).nome);
+            linha.getCell(1).setText(convidados.get(i).rgCpf);
+            linha.getCell(3).setText(convidados.get(i).placaVeiculo);
+        }
     }
 }
 
