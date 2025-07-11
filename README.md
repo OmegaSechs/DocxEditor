@@ -1,11 +1,12 @@
-# DocxEditor
+## DocxEditor
 Editor de arquivos .docx - Gerador de Lista de Autorizações
 📖 Descrição
 Este projeto em Java utiliza a biblioteca Apache POI para automatizar o preenchimento de um formulário de autorização de entrada, baseado em um modelo de documento Word (.docx), para uma associação.
 
 O objetivo é eliminar a necessidade de preenchimento manual, lendo os dados de variáveis dentro do código e gerando um novo documento pronto para ser impresso e assinado.
 
-✨ Funcionalidades
+## Funcionalidades:
+
 Lê um modelo de documento Word (.docx) existente.
 Preenche dinamicamente os campos de texto do formulário, como:
 Nome do Proprietário 
